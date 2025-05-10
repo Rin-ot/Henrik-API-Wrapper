@@ -17,6 +17,16 @@ class ValorantAPI:
             name: str, 
             tag: str
         ):
+        """Get your Valorant Account from API.
+
+        Fetch your Valorant Account details data from Henrik's API.
+
+        :param str api_key: API Key
+        :param str name: Account Name (display name before #.)
+        :param str tag: Account Tagline (display name after #.)
+        :return: Returns your Valorant account data fetched from Henrik API.
+        :rtype: dict
+"""
         uri = f"{self.base_uri}/account/{name}/{tag}"
         response = requests.get(
             url = uri, 
