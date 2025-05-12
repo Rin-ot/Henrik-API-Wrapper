@@ -1,5 +1,7 @@
 import requests
 
+import errors
+
 class ValorantAPI:
     def __init__(
             self, 
@@ -33,6 +35,31 @@ class ValorantAPI:
             headers = self.header
         )
         response.raise_for_status()
+        if response.status_code == 404:
+            raise errors.AccountNotFound('Account not found.')
+        return response.json()
+
+    def get_account_puuid(
+            self, 
+            puuid: str
+        ):
+        """Get your Valorant Account by puuid from API.
+
+        Fetch your Valorant Account details data by puuid from Henrik's API.
+
+        :param str api_key: API Key
+        :param str puuid: Account puuid (e.g. 6955434b-6ab7-5cc2-993a-73072fb585c4)
+        :return: Returns your Valorant account data fetched from Henrik API.
+        :rtype: dict
+"""
+        uri = f"{self.base_uri}/by-puuid/account/{puuid}"
+        response = requests.get(
+            url = uri, 
+            headers = self.header
+        )
+        response.raise_for_status()
+        if response.status_code == 404:
+            raise errors.AccountNotFound('Account not found.')
         return response.json()
 
     def get_mmr(
